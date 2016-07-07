@@ -1,0 +1,24 @@
+{
+    "name": "imxiangli/wx-sdk",
+    "type": "library",
+    "description": "微信公众平台接口SDK",
+    "keywords": ["weixin api", "weixin sdk", "weixin"],
+    "homepage": "https://github.com/imxiangli/wx-sdk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lixiang",
+            "homepage": "http://www.imxiangli.com/",
+            "email": "imxiangli@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": ">=6.1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "imxiangli\\wxsdk\\": ""
+        }
+    }
+}
