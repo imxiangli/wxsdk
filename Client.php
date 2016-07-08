@@ -14,26 +14,27 @@ use imxiangli\wxsdk\api\AddMaterial;
 use imxiangli\wxsdk\api\AddNewsMaterial;
 use imxiangli\wxsdk\api\BatchGetMaterial;
 use imxiangli\wxsdk\api\BatchGetUserInfo;
-use imxiangli\wxsdk\api\BatchUpdateUserGroup;
-use imxiangli\wxsdk\api\CreateGroup;
+use imxiangli\wxsdk\api\BatchTaggingUser;
+use imxiangli\wxsdk\api\BatchUntaggingUser;
 use imxiangli\wxsdk\api\CreateMenu;
 use imxiangli\wxsdk\api\CreateQrcode;
-use imxiangli\wxsdk\api\DeleteGroup;
+use imxiangli\wxsdk\api\CreateTag;
 use imxiangli\wxsdk\api\DeleteMaterial;
 use imxiangli\wxsdk\api\DeleteMenu;
+use imxiangli\wxsdk\api\DeleteTag;
 use imxiangli\wxsdk\api\GetCurrentSelfMenuInfo;
-use imxiangli\wxsdk\api\GetGroups;
 use imxiangli\wxsdk\api\GetMaterial;
 use imxiangli\wxsdk\api\GetMaterialCount;
 use imxiangli\wxsdk\api\GetMedia;
 use imxiangli\wxsdk\api\GetMenu;
 use imxiangli\wxsdk\api\GetOAuth2AccessToken;
+use imxiangli\wxsdk\api\GetTags;
+use imxiangli\wxsdk\api\GetTagUsers;
 use imxiangli\wxsdk\api\GetUser;
-use imxiangli\wxsdk\api\GetUserGroup;
+use imxiangli\wxsdk\api\GetUserTags;
 use imxiangli\wxsdk\api\ShortUrl;
-use imxiangli\wxsdk\api\UpdateGroup;
 use imxiangli\wxsdk\api\UpdateNewsMaterial;
-use imxiangli\wxsdk\api\UpdateUserGroup;
+use imxiangli\wxsdk\api\UpdateTag;
 use imxiangli\wxsdk\api\UpdateUserRemark;
 use imxiangli\wxsdk\api\UploadImg;
 use imxiangli\wxsdk\api\UploadMedia;
@@ -323,46 +324,6 @@ class Client
 		return $api->request();
 	}
 
-	public function createGroup($name)
-	{
-		$api = new CreateGroup();
-		$api->setParams([
-			'access_token' => $this->getAccessToken(),
-			'name' => $name,
-		]);
-		return $api->request();
-	}
-
-	public function updateGroup($id, $name)
-	{
-		$api = new UpdateGroup();
-		$api->setParams([
-			'access_token' => $this->getAccessToken(),
-			'id' => $id,
-			'name' => $name,
-		]);
-		return $api->request();
-	}
-
-	public function deleteGroup($id)
-	{
-		$api = new DeleteGroup();
-		$api->setParams([
-			'access_token' => $this->getAccessToken(),
-			'id' => $id,
-		]);
-		return $api->request();
-	}
-
-	public function getGroups()
-	{
-		$api = new GetGroups();
-		$api->setParams([
-			'access_token' => $this->getAccessToken(),
-		]);
-		return $api->request();
-	}
-
 	public function getUser($next_openid = null)
 	{
 		$api = new GetUser();
@@ -405,34 +366,85 @@ class Client
 		return $api->request();
 	}
 
-	public function getUserGroup($openid)
+	public function createTag($name)
 	{
-		$api = new GetUserGroup();
+		$api = new CreateTag();
 		$api->setParams([
 			'access_token' => $this->getAccessToken(),
-			'openid' => $openid,
+			'name' => $name,
 		]);
 		return $api->request();
 	}
 
-	public function batchUpdateUserGroup($openid_list, $to_groupid)
+	public function updateTag($id, $name)
 	{
-		$api = new BatchUpdateUserGroup();
+		$api = new UpdateTag();
+		$api->setParams([
+			'access_token' => $this->getAccessToken(),
+			'id' => $id,
+			'name' => $name,
+		]);
+		return $api->request();
+	}
+
+	public function deleteTag($id)
+	{
+		$api = new DeleteTag();
+		$api->setParams([
+			'access_token' => $this->getAccessToken(),
+			'id' => $id,
+		]);
+		return $api->request();
+	}
+
+	public function getTagUsers($tagid, $next_openid = null)
+	{
+		$api = new GetTagUsers();
+		$api->setParams([
+			'access_token' => $this->getAccessToken(),
+			'tagid' => $tagid,
+			'next_openid' => $next_openid,
+		]);
+		return $api->request();
+	}
+
+	public function batchTaggingUser($openid_list, $tagid)
+	{
+		$api = new BatchTaggingUser();
 		$api->setParams([
 			'access_token' => $this->getAccessToken(),
 			'openid_list' => $openid_list,
-			'to_groupid' => $to_groupid,
+			'tagid' => $tagid,
 		]);
 		return $api->request();
 	}
 
-	public function updateUserGroup($openid, $to_groupid)
+	public function batchUntaggingUser($openid_list, $tagid)
 	{
-		$api = new UpdateUserGroup();
+		$api = new BatchUntaggingUser();
+		$api->setParams([
+			'access_token' => $this->getAccessToken(),
+			'openid_list' => $openid_list,
+			'tagid' => $tagid,
+		]);
+		return $api->request();
+	}
+
+	public function getTags()
+	{
+		$api = new GetTags();
+		$api->setParams([
+			'access_token' => $this->getAccessToken()
+		]);
+		return $api->request();
+	}
+
+	public function getUserTags($openid)
+	{
+		$api = new GetUserTags();
 		$api->setParams([
 			'access_token' => $this->getAccessToken(),
 			'openid' => $openid,
-			'to_groupid' => $to_groupid,
 		]);
 		return $api->request();
 	}

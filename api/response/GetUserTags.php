@@ -9,9 +9,15 @@
 namespace imxiangli\wxsdk\api\response;
 
 
-class UpdateGroup extends Response
+class GetUserTags extends Response
 {
+	public $tagid_list;
+
 	public function init($data)
 	{
+		if(isset($data['tagid_list']))
+		{
+			$this->tagid_list = $data['tagid_list'];
+		}
 	}
 }

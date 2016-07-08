@@ -12,11 +12,11 @@ namespace imxiangli\wxsdk\api;
 use GuzzleHttp\Client;
 use yii\helpers\Json;
 
-class BatchUpdateUserGroup extends Api
+class BatchTaggingUser extends Api
 {
 	public $access_token;
 	public $openid_list;
-	public $to_groupid;
+	public $tagid;
 
 	public function setParams($params)
 	{
@@ -28,23 +28,23 @@ class BatchUpdateUserGroup extends Api
 		{
 			$this->openid_list = $params['openid_list'];
 		}
-		if(isset($params['to_groupid']))
+		if(isset($params['tagid']))
 		{
-			$this->to_groupid = $params['to_groupid'];
+			$this->tagid = $params['tagid'];
 		}
 	}
 
 	public function request()
 	{
 		$client = new Client();
-		$rs = $client->request('POST', 'https://api.weixin.qq.com/cgi-bin/groups/members/batchupdate', [
+		$rs = $client->request('POST', 'https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging', [
 			'query' => ['access_token' => $this->access_token],
 			'body' => Json::encode([
-				'openid_list' => Json::decode($this->openid_list),
-				'to_groupid' => $this->to_groupid,
+				'openid_list' => $this->openid_list,
+				'tagid' => $this->tagid,
 			]),
 		]);
-		$response = new response\BatchUpdateUserGroup();
+		$response = new response\BatchTaggingUser();
 		$this->processResponse($response, $rs);
 		return $response;
 	}

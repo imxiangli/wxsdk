@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: lixiang
- * Date: 16/2/20
- * Time: 16:23
+ * Date: 16/2/23
+ * Time: 14:17
  */
 
 namespace imxiangli\wxsdk\api;
@@ -12,10 +12,10 @@ namespace imxiangli\wxsdk\api;
 use GuzzleHttp\Client;
 use yii\helpers\Json;
 
-class GetUserGroup extends Api
+class CreateTag extends Api
 {
 	public $access_token;
-	public $openid;
+	public $name;
 
 	public function setParams($params)
 	{
@@ -23,27 +23,24 @@ class GetUserGroup extends Api
 		{
 			$this->access_token = $params['access_token'];
 		}
-		if(isset($params['openid']))
+		if(isset($params['name']))
 		{
-			$this->openid = $params['openid'];
+			$this->name = $params['name'];
 		}
 	}
 
 	public function request()
 	{
-		$query = ['access_token' => $this->access_token];
-		if(!empty($this->next_openid))
-		{
-			$query['next_openid'] = $this->next_openid;
-		}
 		$client = new Client();
-		$rs = $client->request('POST', 'https://api.weixin.qq.com/cgi-bin/groups/getid', [
+		$rs = $client->request('POST', 'https://api.weixin.qq.com/cgi-bin/tags/create', [
 			'query' => ['access_token' => $this->access_token],
 			'body' => Json::encode([
-				'openid' => $this->openid
-			])
+				'tag' => [
+					'name' => $this->name,
+				],
+			]),
 		]);
-		$response = new response\GetUserGroup();
+		$response = new response\CreateTag();
 		$this->processResponse($response, $rs);
 		return $response;
 	}

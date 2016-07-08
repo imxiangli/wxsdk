@@ -9,7 +9,7 @@
 namespace imxiangli\wxsdk\api\response;
 
 
-class DeleteGroup extends Response
+class BatchTaggingUser extends Response
 {
 	public function init($data)
 	{

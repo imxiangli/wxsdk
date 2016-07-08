@@ -9,20 +9,20 @@
 namespace imxiangli\wxsdk\api\response;
 
 
-class CreateGroup extends Response
+class CreateTag extends Response
 {
 	public $id;
 	public $name;
 
 	public function init($data)
 	{
-		if(isset($data['group']['id']))
+		if(isset($data['tag']['id']))
 		{
-			$this->id = $data['group']['id'];
+			$this->id = $data['tag']['id'];
 		}
-		if(isset($data['group']['name']))
+		if(isset($data['tag']['name']))
 		{
-			$this->name = $data['group']['name'];
+			$this->name = $data['tag']['name'];
 		}
 	}
 }

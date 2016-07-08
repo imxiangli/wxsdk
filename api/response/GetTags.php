@@ -9,9 +9,15 @@
 namespace imxiangli\wxsdk\api\response;
 
 
-class BatchUpdateUserGroup extends Response
+class GetTags extends Response
 {
+	public $tags;
+
 	public function init($data)
 	{
+		if(isset($data['tags']))
+		{
+			$this->tags = $data['tags'];
+		}
 	}
 }

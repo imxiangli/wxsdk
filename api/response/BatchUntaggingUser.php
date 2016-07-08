@@ -9,15 +9,9 @@
 namespace imxiangli\wxsdk\api\response;
 
 
-class GetUserGroup extends Response
+class BatchUntaggingUser extends Response
 {
-	public $groupid;
-
 	public function init($data)
 	{
-		if(isset($data['groupid']))
-		{
-			$this->groupid = $data['groupid'];
-		}
 	}
 }

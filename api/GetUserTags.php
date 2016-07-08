@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: lixiang
- * Date: 16/2/23
- * Time: 14:17
+ * Date: 16/2/20
+ * Time: 16:23
  */
 
 namespace imxiangli\wxsdk\api;
@@ -12,11 +12,10 @@ namespace imxiangli\wxsdk\api;
 use GuzzleHttp\Client;
 use yii\helpers\Json;
 
-class UpdateGroup extends Api
+class GetUserTags extends Api
 {
 	public $access_token;
-	public $id;
-	public $name;
+	public $openid;
 
 	public function setParams($params)
 	{
@@ -24,29 +23,22 @@ class UpdateGroup extends Api
 		{
 			$this->access_token = $params['access_token'];
 		}
-		if(isset($params['id']))
+		if(isset($params['openid']))
 		{
-			$this->id = $params['id'];
-		}
-		if(isset($params['name']))
-		{
-			$this->name = $params['name'];
+			$this->openid = $params['openid'];
 		}
 	}
 
 	public function request()
 	{
 		$client = new Client();
-		$rs = $client->request('POST', 'https://api.weixin.qq.com/cgi-bin/groups/update', [
+		$rs = $client->request('POST', 'https://api.weixin.qq.com/cgi-bin/tags/getidlist', [
 			'query' => ['access_token' => $this->access_token],
 			'body' => Json::encode([
-				'group' => [
-					'id' => $this->id,
-					'name' => $this->name,
-				],
-			]),
+				'openid' => $this->openid
+			])
 		]);
-		$response = new response\UpdateGroup();
+		$response = new response\GetUserTags();
 		$this->processResponse($response, $rs);
 		return $response;
 	}

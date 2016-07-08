@@ -12,11 +12,10 @@ namespace imxiangli\wxsdk\api;
 use GuzzleHttp\Client;
 use yii\helpers\Json;
 
-class UpdateUserGroup extends Api
+class DeleteTag extends Api
 {
 	public $access_token;
-	public $openid;
-	public $to_groupid;
+	public $id;
 
 	public function setParams($params)
 	{
@@ -24,27 +23,24 @@ class UpdateUserGroup extends Api
 		{
 			$this->access_token = $params['access_token'];
 		}
-		if(isset($params['openid']))
+		if(isset($params['id']))
 		{
-			$this->openid = $params['openid'];
-		}
-		if(isset($params['to_groupid']))
-		{
-			$this->to_groupid = $params['to_groupid'];
+			$this->id = $params['id'];
 		}
 	}
 
 	public function request()
 	{
 		$client = new Client();
-		$rs = $client->request('POST', 'https://api.weixin.qq.com/cgi-bin/groups/members/batchupdate', [
+		$rs = $client->request('POST', 'https://api.weixin.qq.com/cgi-bin/tags/delete', [
 			'query' => ['access_token' => $this->access_token],
 			'body' => Json::encode([
-				'openid' => $this->openid,
-				'to_groupid' => $this->to_groupid,
+				'tag' => [
+					'id' => $this->id,
+				],
 			]),
 		]);
-		$response = new response\UpdateUserGroup();
+		$response = new response\DeleteTag();
 		$this->processResponse($response, $rs);
 		return $response;
 	}

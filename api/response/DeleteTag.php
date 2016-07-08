@@ -9,7 +9,7 @@
 namespace imxiangli\wxsdk\api\response;
 
 
-class UpdateUserGroup extends Response
+class DeleteTag extends Response
 {
 	public function init($data)
 	{

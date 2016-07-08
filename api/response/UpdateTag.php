@@ -9,15 +9,9 @@
 namespace imxiangli\wxsdk\api\response;
 
 
-class GetGroups extends Response
+class UpdateTag extends Response
 {
-	public $groups;
-
 	public function init($data)
 	{
-		if(isset($data['groups']))
-		{
-			$this->groups = $data['groups'];
-		}
 	}
 }
