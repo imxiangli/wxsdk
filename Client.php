@@ -57,11 +57,6 @@ class Client
 	public $accessTokenProvider;
 
 	/**
-	 * @var messageReceiver
-	 */
-	public $messageReceiver;
-
-	/**
 	 * 创建自定义菜单
 	 * @param string $menu json字符串
 	 * @return api\response\CreateMenu|null
@@ -154,23 +149,22 @@ class Client
 
 	/**
 	 * 接收消息并返回响应消息
+	 * @param MessageReceiver $messageReceiver
 	 * @param $timestamp
 	 * @param $nonce
 	 * @param $msg_signature
 	 * @return string
 	 */
-	public function receiveMessage($timestamp, $nonce, $msg_signature)
+	public function receiveMessage($messageReceiver, $timestamp, $nonce, $msg_signature)
 	{
-		$str = \Yii::$app->getRequest()->getRawBody();
-		$this->messageReceiver->setEncodingType($this->encodingType);
-		$this->messageReceiver->setEncodingAesKey($this->encodingAESKey);
-		$this->messageReceiver->setToken($this->token);
-		$this->messageReceiver->setAppId($this->appid);
-		$this->messageReceiver->setNonce($nonce);
-		$this->messageReceiver->setMsgSignature($msg_signature);
-		$this->messageReceiver->setTimeStamp($timestamp);
-		$this->messageReceiver->setMessage($str);
-		return $this->messageReceiver->getReplyXml();
+		$messageReceiver->setEncodingType($this->encodingType);
+		$messageReceiver->setEncodingAesKey($this->encodingAESKey);
+		$messageReceiver->setToken($this->token);
+		$messageReceiver->setAppId($this->appid);
+		$messageReceiver->setNonce($nonce);
+		$messageReceiver->setMsgSignature($msg_signature);
+		$messageReceiver->setTimeStamp($timestamp);
+		return $messageReceiver->getReplyXml();
 	}
 
 	/**
