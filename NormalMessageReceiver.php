@@ -14,16 +14,6 @@ use imxiangli\wxsdk\message\reply\TextMessage;
 class NormalMessageReceiver extends MessageReceiver
 {
 	/**
-	 * @var message\receive\Message
-	 */
-	public $message;
-
-	public function setMessage($str)
-	{
-		$this->message = $this->convertMessage($str);
-	}
-
-	/**
 	 * @return message\reply\Message
 	 */
 	public function getReply()

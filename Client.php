@@ -52,6 +52,25 @@ class Client
 	public $encodingType = 0; //0:明文模式,2:加密模式
 
 	/**
+	 * 接收消息并返回响应消息
+	 * @param MessageReceiver $messageReceiver
+	 * @param $timestamp
+	 * @param $timestamp
+	 * @param $nonce
+	 * @param $msg_signature
+	 */
+	public function receiveMessage($messageReceiver, $data, $timestamp, $nonce, $msg_signature)
+	{
+		$messageReceiver->setEncodingType($this->encodingType);
+		$messageReceiver->setEncodingAesKey($this->encodingAESKey);
+		$messageReceiver->setToken($this->token);
+		$messageReceiver->setAppId($this->appid);
+		$messageReceiver->setNonce($nonce);
+		$messageReceiver->setMsgSignature($msg_signature);
+		$messageReceiver->setTimeStamp($timestamp);
+	}
+
+	/**
 	 * @var AccessTokenProvider
 	 */
 	public $accessTokenProvider;
@@ -145,26 +164,6 @@ class Client
 			'scene_str' => (string)$scene,
 		]);
 		return $api->request();
-	}
-
-	/**
-	 * 接收消息并返回响应消息
-	 * @param MessageReceiver $messageReceiver
-	 * @param $timestamp
-	 * @param $nonce
-	 * @param $msg_signature
-	 * @return string
-	 */
-	public function receiveMessage($messageReceiver, $timestamp, $nonce, $msg_signature)
-	{
-		$messageReceiver->setEncodingType($this->encodingType);
-		$messageReceiver->setEncodingAesKey($this->encodingAESKey);
-		$messageReceiver->setToken($this->token);
-		$messageReceiver->setAppId($this->appid);
-		$messageReceiver->setNonce($nonce);
-		$messageReceiver->setMsgSignature($msg_signature);
-		$messageReceiver->setTimeStamp($timestamp);
-		return $messageReceiver->getReplyXml();
 	}
 
 	/**

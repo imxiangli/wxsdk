@@ -32,12 +32,7 @@ abstract class MessageReceiver
 	public $nonce;
 	public $timeStamp;
 	public $msg_signature;
-
-	/**
-	 * @param $str
-	 * @return mixed
-	 */
-	abstract public function setMessage($str);
+	public $message;
 
 	/**
 	 * @return message\reply\Message
