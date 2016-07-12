@@ -54,10 +54,10 @@ class Client
 	/**
 	 * 接收消息并返回响应消息
 	 * @param MessageReceiver $messageReceiver
-	 * @param $timestamp
-	 * @param $timestamp
-	 * @param $nonce
-	 * @param $msg_signature
+	 * @param string $data
+	 * @param string $timestamp
+	 * @param string $nonce
+	 * @param string $msg_signature
 	 */
 	public function receiveMessage($messageReceiver, $data, $timestamp, $nonce, $msg_signature)
 	{
@@ -68,6 +68,7 @@ class Client
 		$messageReceiver->setNonce($nonce);
 		$messageReceiver->setMsgSignature($msg_signature);
 		$messageReceiver->setTimeStamp($timestamp);
+		$messageReceiver->message = $messageReceiver->convertMessage($data);
 	}
 
 	/**
